@@ -93,36 +93,39 @@ def interval(df):
 def main():
     st.header('Upload the data with date column')
     data = st.file_uploader("Upload file", type=['csv' ,'xlsx'])
-
-    df = pd.read_excel(data) 
-    df = df.iloc[:,[6,7,12]]
-            #converting Datetime to date
-    df['Date'] = pd.to_datetime(df['Date'] ,errors = 'coerce',format = '%Y-%m-%d').dt.strftime("%Y-%m-%d")
-            
-    df = df.pivot_table(index=['Date'],columns= 'Interval 15 Minutes', values='Queue Offered',aggfunc=sum)
-    df = df.fillna(0)
-    day_level_func = day_level(df)
-    month_func = month(df)
-    interval_func = interval(df)
-    choice = st.radio(
-     "Chhose any one option",
-     ('Actual data', 'Day level', '3 month distribution','Forecast','Interval Wise'))
-            
-    if choice =='Actual data':
-        st.subheader("Actual DataFrame Uploaded by the user")
-        st.dataframe(df.convert_dtypes())
-    elif choice=='Day level':
-        st.subheader("Data converted to day level")
-        st.dataframe(day_level_func[0].convert_dtypes())
-    elif choice=='3 month distribution':
-        st.subheader("month wise distribution")
-        st.dataframe(day_level_func[4].convert_dtypes())
-    elif choice=='Forecast':
-        st.subheader("forecasted data converted by the past distribution")
-        st.dataframe(month_func[3].convert_dtypes())
-    elif choice=='Interval Wise':
-        st.subheader("forecasted data converted into interval wise")
-        st.dataframe(interval_func[2].convert_dtypes())
+    if data is not None:
+        try:
+            df = pd.read_excel(data) 
+            df = df.iloc[:,[6,7,12]]
+                    #converting Datetime to date
+            df['Date'] = pd.to_datetime(df['Date'] ,errors = 'coerce',format = '%Y-%m-%d').dt.strftime("%Y-%m-%d")
+                    
+            df = df.pivot_table(index=['Date'],columns= 'Interval 15 Minutes', values='Queue Offered',aggfunc=sum)
+            df = df.fillna(0)
+            day_level_func = day_level(df)
+            month_func = month(df)
+            interval_func = interval(df)
+            choice = st.radio(
+             "Chhose any one option",
+             ('Actual data', 'Day level', '3 month distribution','Forecast','Interval Wise'))
+                    
+            if choice =='Actual data':
+                st.subheader("Actual DataFrame Uploaded by the user")
+                st.dataframe(df.convert_dtypes())
+            elif choice=='Day level':
+                st.subheader("Data converted to day level")
+                st.dataframe(day_level_func[0].convert_dtypes())
+            elif choice=='3 month distribution':
+                st.subheader("month wise distribution")
+                st.dataframe(day_level_func[4].convert_dtypes())
+            elif choice=='Forecast':
+                st.subheader("forecasted data converted by the past distribution")
+                st.dataframe(month_func[3].convert_dtypes())
+            elif choice=='Interval Wise':
+                st.subheader("forecasted data converted into interval wise")
+                st.dataframe(interval_func[2].convert_dtypes())
+        except Exception:
+            st.write('please upload a excel file')
 
     
     
