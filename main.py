@@ -102,9 +102,12 @@ def main():
                     
             df = df.pivot_table(index=['Date'],columns= 'Interval 15 Minutes', values='Queue Offered',aggfunc=sum)
             df = df.fillna(0)
-            day_level_func = day_level(df)
+            day_level_func = day_level(df)'
+            day_level_func  = round(day_level_func)
             month_func = month(df)
+            month_func = round(month_func)
             interval_func = interval(df)
+            interval_func= round(interval_func)
             choice = st.radio(
              "Chhose any one option",
              ('Actual data', 'Day level', '3 month distribution','Forecast','Interval Wise'))
@@ -114,16 +117,16 @@ def main():
                 st.dataframe(round(df.convert_dtypes()))
             elif choice=='Day level':
                 st.subheader("Data converted to day level")
-                st.dataframe(round(day_level_func[0].convert_dtypes()),2)
+                st.dataframe((day_level_func[0].convert_dtypes()))
             elif choice=='3 month distribution':
                 st.subheader("month wise distribution")
-                st.dataframe(round(day_level_func[4].convert_dtypes()),2)
+                st.dataframe((day_level_func[4].convert_dtypes()))
             elif choice=='Forecast':
                 st.subheader("forecasted data converted by the past distribution")
-                st.dataframe(round(month_func[3].convert_dtypes()),2)
+                st.dataframe((month_func[3].convert_dtypes()))
             elif choice=='Interval Wise':
                 st.subheader("forecasted data converted into interval wise")
-                st.dataframe(round(interval_func[2].convert_dtypes()),2)
+                st.dataframe((interval_func[2].convert_dtypes()))
         except Exception:
             st.write('please upload a excel file')
 
