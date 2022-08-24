@@ -115,7 +115,7 @@ def main():
             #interval_func= round(interval_func)
             choice = st.radio(
              "Chhose any one option",
-             ('Actual data', 'Day level', '3 month distribution','Forecast','Interval Wise','week level'))
+             ('Actual data', 'Day level', '3 month distribution','Forecast','Interval Wise'))
                     
             if choice =='Actual data':
                 st.subheader("Actual DataFrame Uploaded by the user")
