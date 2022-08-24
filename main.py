@@ -102,7 +102,7 @@ def main():
                     
             df = df.pivot_table(index=['Date'],columns= 'Interval 15 Minutes', values='Queue Offered',aggfunc=sum)
             df = df.fillna(0)
-            day_level_func = day_level(df)'
+            day_level_func = day_level(df)
             day_level_func  = round(day_level_func)
             month_func = month(df)
             month_func = round(month_func)
