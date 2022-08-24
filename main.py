@@ -111,19 +111,19 @@ def main():
                     
             if choice =='Actual data':
                 st.subheader("Actual DataFrame Uploaded by the user")
-                st.dataframe(df.convert_dtypes())
+                st.dataframe(round(df.convert_dtypes()))
             elif choice=='Day level':
                 st.subheader("Data converted to day level")
-                st.dataframe(day_level_func[0].convert_dtypes())
+                st.dataframe(round(day_level_func[0].convert_dtypes()),2)
             elif choice=='3 month distribution':
                 st.subheader("month wise distribution")
-                st.dataframe(day_level_func[4].convert_dtypes())
+                st.dataframe(round(day_level_func[4].convert_dtypes()),2)
             elif choice=='Forecast':
                 st.subheader("forecasted data converted by the past distribution")
-                st.dataframe(month_func[3].convert_dtypes())
+                st.dataframe(round(month_func[3].convert_dtypes()),2)
             elif choice=='Interval Wise':
                 st.subheader("forecasted data converted into interval wise")
-                st.dataframe(interval_func[2].convert_dtypes())
+                st.dataframe(round(interval_func[2].convert_dtypes()),2)
         except Exception:
             st.write('please upload a excel file')
 
