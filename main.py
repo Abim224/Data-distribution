@@ -30,7 +30,7 @@ def day_level(df):
     day = day.sort_values(by='Date',ascending=True)
     day_4_month = day.sort_values(by="Date",ascending=True).set_index("Date").last("3M")
 
-    distribution_by_week_pivot   = day_4_month.pivot_table(index=['wk&day'],columns= 'month', values='call_percent', aggfunc='first')
+    distribution_by_week_pivot   = day_4_month.pivot_table(index=['wk&day'],columns= 'month', values='call_percent', aggfunc='sum')
     distribution_by_week_pivot['distribution'] = distribution_by_week_pivot.mean(axis=1)
     distribution_by_week_pivot = distribution_by_week_pivot
     day= day.merge(distribution_by_week_pivot, on=['wk&day'], how='left')
@@ -39,6 +39,11 @@ def day_level(df):
     day_copy = day_copy.groupby('wk&day').mean()
     day_copy =day_copy.fillna(0)
     day_copy['%dict'] = (day_copy['distribution']/sum(day_copy['distribution']))*100
+    day =day.fillna(0)
+    sum_month_wise = sum_month_wise.fillna(0)
+    day_4_month = day_4_month.fillna(0)
+    distribution_by_week_pivot = distribution_by_week_pivot.fillna(0)
+    day_copy = day_copy.fillna(0)
     return round(day),sum_month_wise,day_4_month,distribution_by_week_pivot,round(day_copy)
 
 def month(df):
@@ -110,7 +115,7 @@ def main():
             #interval_func= round(interval_func)
             choice = st.radio(
              "Chhose any one option",
-             ('Actual data', 'Day level', '3 month distribution','Forecast','Interval Wise'))
+             ('Actual data', 'Day level', '3 month distribution','Forecast','Interval Wise','week level'))
                     
             if choice =='Actual data':
                 st.subheader("Actual DataFrame Uploaded by the user")
@@ -127,6 +132,9 @@ def main():
             elif choice=='Interval Wise':
                 st.subheader("forecasted data converted into interval wise")
                 st.dataframe((interval_func[2].convert_dtypes()))
+            elif choice=='week level':
+                st.subheader('week level')
+                st.dataframe(day_level_func[4]
         except Exception:
             st.write('please upload a excel file')
 
