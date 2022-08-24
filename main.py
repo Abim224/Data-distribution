@@ -39,7 +39,7 @@ def day_level(df):
     day_copy = day_copy.groupby('wk&day').mean()
     day_copy =day_copy.fillna(0)
     day_copy['%dict'] = (day_copy['distribution']/sum(day_copy['distribution']))*100
-    return day,sum_month_wise,day_4_month,distribution_by_week_pivot,day_copy
+    return round(day),sum_month_wise,day_4_month,distribution_by_week_pivot,round(day_copy)
 
 def month(df):
     day_level_func = day_level(df)
@@ -64,7 +64,7 @@ def month(df):
     forecast_df = month_merge.merge(forecast, on=['month'], how='left')
     forecast_df['forecast'] = ((forecast_df['distribution']*forecast_df['Value'])/100)
     forecast_df = round(forecast_df,2)
-    return month,month_df,forecast,forecast_df
+    return month,month_df,forecast,round(forecast_df)
 def interval(df):
     month_func = month(df)
     forecast_df = month_func[3]
