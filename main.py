@@ -135,7 +135,7 @@ def main():
             elif choice=='week level':
                 st.subheader('week level')
                 st.dataframe(day_level_func[4]
-        except Exception:
+       except Exception:
             st.write('please upload a excel file')
 
     
