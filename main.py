@@ -89,7 +89,7 @@ def interval(df):
     interval_merge = interval_merge.sort_values(by="future_Date",ascending=True)
     interval_merge_sum =  interval_merge.groupby(['month']).agg(
                sum_month_wise=('forecast', 'sum')).reset_index()
-    return  interval,interval_day,interval_merge,interval_merge_sum
+    return  interval,interval_day,round(interval_merge),interval_merge_sum
 def main():
     st.header('Upload the data with date column')
     data = st.file_uploader("Upload file", type=['csv' ,'xlsx'])
@@ -103,11 +103,11 @@ def main():
             df = df.pivot_table(index=['Date'],columns= 'Interval 15 Minutes', values='Queue Offered',aggfunc=sum)
             df = df.fillna(0)
             day_level_func = day_level(df)
-            day_level_func  = round(day_level_func)
+            #day_level_func  = round(day_level_func)
             month_func = month(df)
-            month_func = round(month_func)
+            #month_func = round(month_func)
             interval_func = interval(df)
-            interval_func= round(interval_func)
+            #interval_func= round(interval_func)
             choice = st.radio(
              "Chhose any one option",
              ('Actual data', 'Day level', '3 month distribution','Forecast','Interval Wise'))
