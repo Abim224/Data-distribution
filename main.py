@@ -131,7 +131,7 @@ def main():
                 st.dataframe((month_func[3].convert_dtypes()))
             elif choice=='Interval Wise':
                 st.subheader("forecasted data converted into interval wise")
-                st.dataframe((interval_func[2].convert_dtypes()))
+                st.dataframe((interval_func[2].T.convert_dtypes()))
             
         except Exception:
             st.write('please upload a excel file')
